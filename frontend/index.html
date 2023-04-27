@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="main.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Book app</title>
+</head>
+<body>
+    <h1>Book app</h1>
+    <h2 id="current-user"></h2>
+    <button id="log-out" hidden>Log out</button>
+    <ul id="book-list"></ul>
+    <div id="book-registration" hidden>
+        <h2>Add more books</h2>
+        <label for="add-title">Title</label>
+        <input type="text" id="add-title" placeholder="Title"></br>
+        <label for="add-author">Author</label>
+        <input type="text" id="add-author" placeholder="Name Surname"></br>
+        <label for="add-date">Release date</label>
+        <input type="date" id="add-date" value="2023-01-01"></br>
+        <label for="add-pages">Number of pages</label>
+        <input type="number" id="add-pages" min="0"></br>
+        <input type="file" id="add-img"></br>
+        <button id="add-book">Add book</button>
+    </div>
+
+    <div id="login-user">
+        <h2>Log in</h2>
+        <label for="user-id">Username: </label>
+        <input type="text" id="user-id" placeholder="Username">
+        <label for="user-pw">Password: </label>
+        <input type="text" id="user-pw" placeholder="Password">
+        <button id="user-login">Log in</button>
+    </div>
+
+    <div id="register-user">
+        <h2>OR</h2>
+        <h2>Register</h2>
+        <label for="user-email">Email: </label>
+        <input type="text" id="user-email" placeholder="Email">
+        <label for="new-user-id">Username: </label>
+        <input type="text" id="new-user-id" placeholder="Username">
+        <label for="new-user-pw">Password: </label>
+        <input type="text" id="new-user-pw" placeholder="Password">
+        <button id="user-register">Register</button>
+    </div>
+
+    <h2 id="to-read-header" hidden>To Read</h2>
+    <ul id="to-read"></ul>
+</body>
+</html>
