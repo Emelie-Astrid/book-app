@@ -35,24 +35,11 @@
             <button id="user-register">Register</button>
         </div>
         <button id="my-books" hidden>My Books</button>
-        <button id="home" hidden>Home</button>
         <button id="log-out" hidden>Log out</button>
     </div>
-    <ul id="book-list"></ul>
-    <div id="book-registration" hidden>
-        <h2>Add more books</h2>
-        <label for="add-title">Title</label>
-        <input type="text" id="add-title" placeholder="Title"></br>
-        <label for="add-author">Author</label>
-        <input type="text" id="add-author" placeholder="Name Surname"></br>
-        <label for="add-date">Release date</label>
-        <input type="date" id="add-date" value="2023-01-01"></br>
-        <label for="add-pages">Number of pages</label>
-        <input type="number" id="add-pages" min="0"></br>
-        <input type="file" id="add-img"></br>
-        <button id="add-book">Add book</button>
+    <div class="book-display">
+        <ul id="book-list"></ul>
     </div>
-
     <h2 id="to-read-header" hidden>To Read</h2>
     <ul id="to-read"></ul>
 </body>

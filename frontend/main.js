@@ -7,7 +7,6 @@ let loginUser = document.querySelector("#login-user");
 let currentUser = document.querySelector("#current-user");
 let logOutBtn = document.querySelector("#log-out");
 let myBooksListBtn = document.querySelector("#my-books");
-let homeBtn = document.querySelector("#home");
 
 //User login
 let userId = document.querySelector("#user-id");
@@ -40,7 +39,7 @@ let renderBooks = async () => {
                 }
                 averageRating = (sum / ratings.length).toFixed(2);
             }
-            bookList.innerHTML += `<li><img src="http://localhost:1337${book.attributes.cover.data.attributes?.url}" height=150/>
+            bookList.innerHTML += `<li><img src="http://localhost:1337${book.attributes.cover.data.attributes?.url}"/>
             Title: ${book.attributes.title} </br>
             Author: ${book.attributes.author} </br>
             Release date: ${book.attributes.releaseDate} </br>
@@ -61,18 +60,18 @@ let renderBooks = async () => {
 };
 
 
-//Hide books - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-let hideBook = () => {
-    bookList.classList.add("hidden");
-    myBooksBtns.classList.add("hidden");
-    homeBtn.removeAttribute("hidden");
-}
-
-//Show books - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-let showBooks = () => {
-    bookList.classList.remove("hidden");
-    myBooksBtns.classList.remove("hidden");
-    homeBtn.classList.add("hidden");
+//Hide and show books - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+let hideAndShowBook = () => {
+    if (myBooksListBtn.innerText === "Home"){
+        bookList.classList.remove("hidden");
+        myBooksListBtn.innerText = "My Books";
+        toReadHeader.setAttribute("hidden", "");
+    }
+    else {
+        bookList.classList.add("hidden");
+        myBooksListBtn.innerText = "Home";
+        toReadHeader.removeAttribute("hidden");
+    }
 }
 
 
@@ -131,7 +130,6 @@ let logout = () => {
 //Show and hide function - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 function hideShow() {
     currentUser.innerHTML = `Welcome ${userId.value}`;
-    toReadHeader.removeAttribute("hidden");
     registerUser.classList.add("hidden");
     loginUser.classList.add("hidden");
     logOutBtn.removeAttribute("hidden");
@@ -248,85 +246,9 @@ logOutBtn.addEventListener("click", () => {
 });
 
 myBooksListBtn.addEventListener("click", () => {
-    hideBook()
-});
-
-homeBtn.addEventListener("click", () => {
-    showBooks()
+    hideAndShowBook()
 });
 
 renderBooks();
 toRead();
 setStyling();
-
-
-
-//Lägg till "enter" på knappar
-//boolean för att få boken att hamna på att-läsa lista
-
-// Content relations - user has many books, men när ska relationen skapas?
-
-// Skapa en boolean för toRead: true/false
-// Knapp för att lägga till -> toRead: true
-
-// Nästa steg, betygsätt -> hamnar i ny lista 
-// Med möjlighet att sortera 
-
-//Skapa knapp för varje bok som user klickar på för att lägga till i "att läsa"
-//Ha en arr + ul dit informationen kopieras. 
-//Ta bort knapp? 
-
-//Fixa knapp så betyg sparas för användare/för varje boks id
-//Skapa array för betygsskala
-
-//Separat content type för betyg? 
-
-
-
-
-// Överflödig kod
-
-//New book
-// let newTitle = document.querySelector("#add-title");
-// let newAuthor = document.querySelector("#add-author");
-// let newReleaseDate = document.querySelector("#add-date");
-// let newBookPages = document.querySelector("#add-pages");
-// let newImg = document.querySelector("#add-img");
-
-//Add book - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// let addNewBooks = async () => {
-//     Ladda upp bild
-//     let imgFile = newImg.files;
-//     let formData = new FormData();
-//     formData.append("files", imgFile[0]); 
-
-//     await axios.post("http://localhost:1337/api/upload", 
-//         formData, {
-//       headers: {
-//         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-//       },
-//     })
-//     .then((response) => {axios.post("http://localhost:1337/api/books/", {
-//             data: {
-//                 title:newTitle.value,
-//                 author:newAuthor.value, 
-//                 pages:newBookPages.value,
-//                 grade:null,
-//                 releaseDate: newReleaseDate.value,
-//                 cover: response.data[0].id,
-//             },
-//             }, {
-//             headers: {
-//                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
-//             },
-//             }
-//         );
-//     });
-// };
-// document.querySelector("#add-book").addEventListener("click", addNewBooks);
-
-// rateBtns.forEach(button => {
-//     button.addEventListener('click', (event) => {
-//       console.log(event.target.value);
-//     });
-// });
