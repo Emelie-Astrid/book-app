@@ -1,5 +1,5 @@
 let bookList = document.querySelector("#book-list");
-let toReadList = document.querySelector("#to-read");
+let toReadList = document.querySelector('#to-read');
 let toReadHeader = document.querySelector("#to-read-header");
 let bookRegistration = document.querySelector("#book-registration");
 let registerUser = document.querySelector("#register-user");
@@ -67,14 +67,15 @@ let hideAndShowBook = () => {
         bookDisplay.classList.remove("hidden");
         myBooksListBtn.innerText = "My Books";
         toReadHeader.setAttribute("hidden", "");
+        toReadList.innerHTML = '';
     }
     else {
+        renderMyBooks();
         bookDisplay.classList.add("hidden");
         myBooksListBtn.innerText = "Home";
         toReadHeader.removeAttribute("hidden");
     }
 }
-
 
 //Log in - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 let loggedInId;
@@ -138,7 +139,6 @@ function hideShow() {
     let radioRate = document.querySelectorAll('input[type="radio"]');
     let radioLabels = document.querySelectorAll(".radio-label");
     let rateBtns = document.querySelectorAll('.rate');
-    // bookRegistration.removeAttribute("hidden");
 
     for (let i = 0; i < toReadBtns.length; i++) {
         toReadBtns[i].removeAttribute("hidden");
@@ -218,26 +218,55 @@ let addToList = async (bookId, loggedInId) => {
     console.log("addToList: ", response);
 }
 
-//HÄR!!!!
 
+//MY BOOKS LIST - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-// Show read list  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-let toRead = async () => {
+async function renderMyBooks() {
+    let booksArr = [];
     if (sessionStorage.getItem("token")) {
-        let response = await axios.get("http://localhost:1337/api/users?populate=*", 
-        {
+        let config = {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-            },
-        }
-        );
-        // console.log(response.data); //ser info för den inloggade personen
-        // response.data.books.forEach((book) => {
-        //     toReadList.innerHTML += `<li>Title: ${book.title}</li>`
-        // })
-    }
-} 
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+        };
+  
+        let response = await axios.get('http://localhost:1337/api/users?populate=*', config);
+        let books = response.data;
 
+        books.forEach(user => {
+            user.books.forEach(book => {
+            booksArr.push(book.id);
+        });
+        });
+    }
+  
+    booksArr.forEach(async (bookId) => {
+        let response = await axios.get(`http://localhost:1337/api/books/${bookId}?populate=*`);
+        if (response.data.data) {
+            let book = response.data.data;
+            let ratings = book.attributes.ratings.data;
+            let averageRating;
+            if (ratings.length === 0) {
+                averageRating = "No rating";
+            }
+            else {
+                let sum = 0;
+                for (let i = 0; i < ratings.length; i++) {
+                    sum += ratings[i].attributes.bookRate;
+                }
+                averageRating = (sum / ratings.length).toFixed(2);
+            }
+            toReadList.innerHTML += `<li><img src="http://localhost:1337${book.attributes.cover.data.attributes?.url}"/>
+            Title: ${book.attributes.title} </br>
+            Author: ${book.attributes.author} </br>
+            Release date: ${book.attributes.releaseDate} </br>
+            Pages: ${book.attributes.pages} </br>
+            Grade: ${averageRating} </br>
+            </li>`;
+        }
+    });
+}
+  
 //Events - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 document.querySelector("#user-register").addEventListener("click", register);
 document.querySelector("#user-login").addEventListener("click", login);
@@ -247,9 +276,8 @@ logOutBtn.addEventListener("click", () => {
 });
 
 myBooksListBtn.addEventListener("click", () => {
-    hideAndShowBook()
+    hideAndShowBook();
 });
 
 renderBooks();
-toRead();
 setStyling();
