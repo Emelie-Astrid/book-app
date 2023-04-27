@@ -155,7 +155,7 @@ document.addEventListener('click', function(event) {
 });
 
 //Add rating - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-let addRating = async (bookId, ratingInput) => {
+let addRating = async (bookId, ratingInput, loggedInId) => {
     let bookGrade = ratingInput ? ratingInput.value : null;
     //ändra till om inte ratinginput finns, går det inte att trycka på knappen? 
     // console.log(bookGrade);
@@ -166,6 +166,7 @@ let addRating = async (bookId, ratingInput) => {
         data: {
           bookRate: bookGrade,
           book: bookId,
+          user:loggedInId,
         },
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -188,8 +189,6 @@ document.addEventListener('click', function(event){
 })
 
 //Add to read list - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
-
 let addToList = async (bookId, loggedInId) => {
     let response = await axios.post("http://localhost:1337/api/users/", {
             id: loggedInId,
