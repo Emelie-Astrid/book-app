@@ -7,6 +7,7 @@ let loginUser = document.querySelector("#login-user");
 let currentUser = document.querySelector("#current-user");
 let logOutBtn = document.querySelector("#log-out");
 let myBooksListBtn = document.querySelector("#my-books");
+let bookDisplay = document.querySelector("#book-display");
 
 //User login
 let userId = document.querySelector("#user-id");
@@ -63,12 +64,12 @@ let renderBooks = async () => {
 //Hide and show books - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 let hideAndShowBook = () => {
     if (myBooksListBtn.innerText === "Home"){
-        bookList.classList.remove("hidden");
+        bookDisplay.classList.remove("hidden");
         myBooksListBtn.innerText = "My Books";
         toReadHeader.setAttribute("hidden", "");
     }
     else {
-        bookList.classList.add("hidden");
+        bookDisplay.classList.add("hidden");
         myBooksListBtn.innerText = "Home";
         toReadHeader.removeAttribute("hidden");
     }

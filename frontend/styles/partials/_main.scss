@@ -60,6 +60,9 @@ h2 {
             display: flex;
             flex-wrap: nowrap;
             margin-top: 8%;
+            .hidden {
+                display: none
+            }
     
         li {
             width: calc(33.33% - 10px);
