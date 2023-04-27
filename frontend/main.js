@@ -1,5 +1,5 @@
 let bookList = document.querySelector("#book-list");
-let toReadList = document.querySelector('#to-read');
+let toReadList = document.querySelector("#to-read");
 let toReadHeader = document.querySelector("#to-read-header");
 let bookRegistration = document.querySelector("#book-registration");
 let registerUser = document.querySelector("#register-user");
@@ -13,6 +13,7 @@ let bookDisplay = document.querySelector("#book-display");
 let userId = document.querySelector("#user-id");
 let userPw = document.querySelector("#user-pw");
 let userLoginBtn = document.querySelector("#user-login");
+let loggedInId;
 
 //Register user
 let newUser = document.querySelector("#new-user-id");
@@ -22,7 +23,7 @@ let newUserPw = document.querySelector("#new-user-pw");
 //Class
 let toReadBtns = document.getElementsByClassName("to-read");
 
-//Render books - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+//RENDER BOOKS - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 let renderBooks = async () => {
     let response = await axios.get("http://localhost:1337/api/books?populate=*");
     if (response.data) {
@@ -60,8 +61,7 @@ let renderBooks = async () => {
     }
 };
 
-
-//Hide and show books - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//HIDE AND SHOW BOOK - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 let hideAndShowBook = () => {
     if (myBooksListBtn.innerText === "Home"){
         bookDisplay.classList.remove("hidden");
@@ -77,9 +77,7 @@ let hideAndShowBook = () => {
     }
 }
 
-//Log in - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-let loggedInId;
-
+//LOG IN FUNCTION - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 let login = () => {
     return axios.post("http://localhost:1337/api/auth/local",
     {
@@ -103,13 +101,13 @@ let login = () => {
     });
 }
 
-//Get user ID - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//GET USER ID - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 login().then((id) => {
     loggedInId = id;
     console.log(loggedInId);
 });
 
-//Register user - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+//REGISTER USER ID- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 let register = async () => {
     await axios.post("http://localhost:1337/api/auth/local/register",{
         username:newUser.value,
@@ -122,14 +120,14 @@ let register = async () => {
     alert("User has been created, please proceed to log in");
 }
 
-//Log out - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+//LOG OUT FUNCTION - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 let logout = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("loginId");
     location.reload();
 }
 
-//Show and hide function - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//HIDE AND SHOW BUTTONS - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 function hideShow() {
     currentUser.innerHTML = `Welcome ${userId.value}`;
     registerUser.classList.add("hidden");
@@ -138,7 +136,7 @@ function hideShow() {
     myBooksListBtn.removeAttribute("hidden");
     let radioRate = document.querySelectorAll('input[type="radio"]');
     let radioLabels = document.querySelectorAll(".radio-label");
-    let rateBtns = document.querySelectorAll('.rate');
+    let rateBtns = document.querySelectorAll(".rate");
 
     for (let i = 0; i < toReadBtns.length; i++) {
         toReadBtns[i].removeAttribute("hidden");
@@ -147,32 +145,32 @@ function hideShow() {
         rateBtns[i].removeAttribute("hidden");
     }
     for (let i = 0; i < radioRate.length; i++) {
-      radioRate[i].removeAttribute('hidden');
+        radioRate[i].removeAttribute("hidden");
     }
     for (let i = 0; i < radioLabels.length; i++) {
-      radioLabels[i].removeAttribute('hidden');
+        radioLabels[i].removeAttribute("hidden");
     }
 }
 
-//Add styling - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//ADD STYLING - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 let setStyling = async () => {
     let response = await axios.get("http://localhost:1337/api/theme");
     let theme = response.data.data.attributes.theme;
     document.body.classList.add(theme);
 }
 
-//Find bookId and rating input - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-let rateBtns = document.querySelectorAll('.rate');
+//FIND BOOK ID and RATING INPUT - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+let rateBtns = document.querySelectorAll(".rate");
 
-document.addEventListener('click', function(event) {
-    if (event.target && event.target.classList.contains('rate')) {
+document.addEventListener("click", function(event) {
+    if (event.target && event.target.classList.contains("rate")) {
         let bookId = event.target.value;
         let ratingInput = document.querySelector(`input[name='${bookId}']:checked`);
         addRating(bookId, ratingInput);
     }
 });
 
-//Add rating - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//ADD RATING - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 let addRating = async (bookId, ratingInput, loggedInId) => {
     let bookGrade = ratingInput ? ratingInput.value : null;
     //ändra till om inte ratinginput finns, går det inte att trycka på knappen? 
@@ -193,11 +191,11 @@ let addRating = async (bookId, ratingInput, loggedInId) => {
     console.log("addRating: ", response);
 }
 
-//Find bookId and to read buttons - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-let myBooksBtns = document.querySelectorAll('.to-read');
+//FIND BOOK ID and TO READ BUTTONS - - - - - - - - - - - - - - - - - - - - - - - - - -
+let myBooksBtns = document.querySelectorAll(".to-read");
 
-document.addEventListener('click', function(event){
-    if (event.target && event.target.classList.contains('to-read')) {
+document.addEventListener("click", function(event){
+    if (event.target && event.target.classList.contains("to-read")) {
         let bookId = event.target.value;
         // console.log("bookId: " + bookId + "userId: " + loggedInId);
 
@@ -206,7 +204,7 @@ document.addEventListener('click', function(event){
     }
 })
 
-//Add to read list - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+//ADD TO READ LIST - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 let addToList = async (bookId, loggedInId) => {
     let response = await axios.post("http://localhost:1337/api/users/", {
             id: loggedInId,
@@ -218,19 +216,17 @@ let addToList = async (bookId, loggedInId) => {
     console.log("addToList: ", response);
 }
 
-
-//MY BOOKS LIST - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
+//RENDER MY BOOKS - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 async function renderMyBooks() {
     let booksArr = [];
     if (sessionStorage.getItem("token")) {
         let config = {
             headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
   
-        let response = await axios.get('http://localhost:1337/api/users?populate=*', config);
+        let response = await axios.get("http://localhost:1337/api/users?populate=*", config);
         let books = response.data;
 
         books.forEach(user => {
@@ -267,7 +263,7 @@ async function renderMyBooks() {
     });
 }
   
-//Events - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//EVENTS - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 document.querySelector("#user-register").addEventListener("click", register);
 document.querySelector("#user-login").addEventListener("click", login);
 
