@@ -7,6 +7,7 @@ let loginUser = document.querySelector("#login-user");
 let currentUser = document.querySelector("#current-user");
 let logOutBtn = document.querySelector("#log-out");
 let myBooksListBtn = document.querySelector("#my-books");
+let homeBtn = document.querySelector("#home");
 
 //User login
 let userId = document.querySelector("#user-id");
@@ -58,6 +59,22 @@ let renderBooks = async () => {
         });
     }
 };
+
+
+//Hide books - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+let hideBook = () => {
+    bookList.classList.add("hidden");
+    myBooksBtns.classList.add("hidden");
+    homeBtn.removeAttribute("hidden");
+}
+
+//Show books - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+let showBooks = () => {
+    bookList.classList.remove("hidden");
+    myBooksBtns.classList.remove("hidden");
+    homeBtn.classList.add("hidden");
+}
+
 
 //Log in - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 let loggedInId;
@@ -228,6 +245,14 @@ document.querySelector("#user-login").addEventListener("click", login);
 
 logOutBtn.addEventListener("click", () => {
     logout()
+});
+
+myBooksListBtn.addEventListener("click", () => {
+    hideBook()
+});
+
+homeBtn.addEventListener("click", () => {
+    showBooks()
 });
 
 renderBooks();
