@@ -10,6 +10,19 @@ body.dark {
   font-family: sans-serif;
 }
 
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.top .user {
+  display: flex;
+  flex-direction: column;
+}
+.top .hidden {
+  display: none;
+}
+
 .hidden {
   display: none;
 }

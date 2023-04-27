@@ -6,6 +6,7 @@ let registerUser = document.querySelector("#register-user");
 let loginUser = document.querySelector("#login-user");
 let currentUser = document.querySelector("#current-user");
 let logOutBtn = document.querySelector("#log-out");
+let myBooksListBtn = document.querySelector("#my-books");
 
 //User login
 let userId = document.querySelector("#user-id");
@@ -117,6 +118,7 @@ function hideShow() {
     registerUser.classList.add("hidden");
     loginUser.classList.add("hidden");
     logOutBtn.removeAttribute("hidden");
+    myBooksListBtn.removeAttribute("hidden");
     let radioRate = document.querySelectorAll('input[type="radio"]');
     let radioLabels = document.querySelectorAll(".radio-label");
     let rateBtns = document.querySelectorAll('.rate');
