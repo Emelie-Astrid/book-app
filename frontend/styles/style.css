@@ -1,13 +1,60 @@
 body.light {
-  background-color: plum;
-  color: white;
-  font-family: sans-serif;
+  background-color: hsl(61, 100%, 91%);
+  color: hsl(334, 34%, 27%);
+  font-family: "Overpass", sans-serif;
 }
 
 body.dark {
-  background-color: darkmagenta;
-  color: peachpuff;
-  font-family: sans-serif;
+  background-color: hsl(334, 34%, 27%);
+  color: hsl(61, 100%, 91%);
+  font-family: "Overpass", sans-serif;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 68px;
+  font-family: "Yeseva One", serif;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+}
+
+.input label {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.input input {
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.input input:focus {
+  outline: none;
+  border-color: #EDE0B2;
+  box-shadow: 0 0 0 2px hsl(333, 29%, 42%);
+}
+
+button {
+  font-family: "Yeseva One", serif;
+  font-size: 18px;
+  background-color: hsl(346, 56%, 63%);
+  color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 8px;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: hsl(347, 52%, 48%);
 }
 
 .top {
@@ -21,9 +68,15 @@ body.dark {
 }
 .top .user h2 {
   text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "Rubik", sans-serif;
 }
 .top .hidden {
   display: none;
+}
+.top .my-page {
+  font-family: "Yeseva One", serif;
 }
 
 h2 {
@@ -32,6 +85,10 @@ h2 {
 
 .hidden {
   display: none;
+}
+
+.my-page {
+  font-family: "Yeseva One", serif;
 }
 
 .book-display {
@@ -78,6 +135,32 @@ h2 {
 
 .radio {
   display: flex;
+  align-items: center;
+}
+
+input[type=radio] {
+  font-family: "Yeseva One", serif;
+  font-size: 18px;
+  color: hsl(346, 56%, 63%);
+  margin: 8px;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid hsl(346, 56%, 63%);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+input[type=radio]:checked {
+  background-color: hsl(346, 56%, 63%);
+  border-color: hsl(346, 56%, 63%);
+}
+
+p {
+  color: hsl(347, 52%, 48%);
+  text-align: center;
+  font-size: 16px;
 }
 
 @media (max-width: 768px) {

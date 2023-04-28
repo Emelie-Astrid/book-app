@@ -61,6 +61,43 @@ let renderBooks = async () => {
     }
 };
 
+let renderBooksWithButton = async () => {
+    let response = await axios.get("http://localhost:1337/api/books?populate=*");
+    if (response.data) {
+        let books = response.data.data;
+        books.forEach(book => {
+            let ratings = book.attributes.ratings.data;
+            let averageRating;
+            if (ratings.length === 0) {
+                averageRating = "No rating";
+            }
+            else {
+                let sum = 0;
+                for (let i = 0; i < ratings.length; i++) {
+                sum += ratings[i].attributes.bookRate;
+                }
+                averageRating = (sum / ratings.length).toFixed(2);
+            }
+            bookList.innerHTML += `<li><img src="http://localhost:1337${book.attributes.cover.data.attributes?.url}"/>
+            Title: ${book.attributes.title} </br>
+            Author: ${book.attributes.author} </br>
+            Release date: ${book.attributes.releaseDate} </br>
+            Pages: ${book.attributes.pages} </br>
+            Grade: ${averageRating} </br>
+            <div class="radio">
+                <input type="radio" id="${book.id}-1" name="${book.id}" value="1"> <label class="radio-label" for="${book.id}-1" >1</label>
+                <input type="radio" id="${book.id}-2" name="${book.id}" value="2"> <label class="radio-label" for="${book.id}-2" >2</label>
+                <input type="radio" id="${book.id}-3" name="${book.id}" value="3"> <label class="radio-label" for="${book.id}-3" >3</label>
+                <input type="radio" id="${book.id}-4" name="${book.id}" value="4"> <label class="radio-label" for="${book.id}-4" >4</label>
+                <input type="radio" id="${book.id}-5" name="${book.id}" value="5"> <label class="radio-label" for="${book.id}-5" >5</label>
+            </div>
+            <button class="rate" id="${book.id}" value="${book.id}">Rate</button>
+            <button class="to-read" id="${book.id}" value="${book.id}">Add to my list</button>
+            </li>`;
+        });
+    }
+};
+
 //HIDE AND SHOW BOOK - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 let hideAndShowBook = () => {
     if (myBooksListBtn.innerText === "Home"){
@@ -122,6 +159,7 @@ let register = async () => {
 
 //LOG OUT FUNCTION - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 let logout = () => {
+    alert("Thank for visiting, please come back soon!")
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("loginId");
     location.reload();
@@ -167,16 +205,15 @@ document.addEventListener("click", function(event) {
         let bookId = event.target.value;
         let ratingInput = document.querySelector(`input[name='${bookId}']:checked`);
         addRating(bookId, ratingInput);
+        alert("Thank for your rating!");
+        bookList.innerHTML = "";
+        renderBooksWithButton();
     }
 });
 
 //ADD RATING - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 let addRating = async (bookId, ratingInput, loggedInId) => {
     let bookGrade = ratingInput ? ratingInput.value : null;
-    //ändra till om inte ratinginput finns, går det inte att trycka på knappen? 
-    // console.log(bookGrade);
-    // console.log(bookId);
-    // console.log("userId: " + userId);
 
     let response = await axios.post("http://localhost:1337/api/ratings/", {
         data: {
@@ -191,30 +228,28 @@ let addRating = async (bookId, ratingInput, loggedInId) => {
     console.log("addRating: ", response);
 }
 
-//FIND BOOK ID and TO READ BUTTONS - - - - - - - - - - - - - - - - - - - - - - - - - -
-let myBooksBtns = document.querySelectorAll(".to-read");
-
-document.addEventListener("click", function(event){
-    if (event.target && event.target.classList.contains("to-read")) {
-        let bookId = event.target.value;
-        // console.log("bookId: " + bookId + "userId: " + loggedInId);
-
-        // addToList(bookId, loggedInId);
-        addToList(bookId, loggedInId.toString());
-    }
-})
-
 //ADD TO READ LIST - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-let addToList = async (bookId, loggedInId) => {
+let addToList = async (bookId) => {
     let response = await axios.post("http://localhost:1337/api/users/", {
-            id: loggedInId,
+        data: {
             books: bookId,
+        },
         headers: {
             Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
     });
     console.log("addToList: ", response);
 }
+
+let myBooksBtns = document.querySelectorAll(".to-read");
+
+document.addEventListener("click", function(event){
+    if (event.target && event.target.classList.contains("to-read")) {
+        let bookId = event.target.value;
+
+        addToList(bookId);
+    }
+})
 
 //RENDER MY BOOKS - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 async function renderMyBooks() {

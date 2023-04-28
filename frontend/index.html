@@ -6,15 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/style.css">
     <title>Book app</title>
 </head>
 <body>
     <div class="top" id="top">
-        <h1>Book app</h1>
-        <h2 id="current-user"></h2>
+        <h1>A little book collection</h1>
+        <h2 id="current-user" class="my-page"></h2>
         <div class="user" id="login-user">
-            <h2>Log in</h2>
+            <h2>LOG IN</h2>
             <div class="input">
             <label for="user-id">Username: </label>
             <input type="text" id="user-id" placeholder="Username"> </br>
@@ -24,7 +33,7 @@
         </div>
         <div class="user" id="register-user">
             <h2>OR</h2>
-            <h2>Register</h2>
+            <h2>REGISTER</h2>
             <div class="input">
             <label for="user-email">Email: </label>
             <input type="text" id="user-email" placeholder="Email"> </br>
@@ -40,9 +49,10 @@
     <div class="book-display" id="book-display">
         <ul id="book-list"></ul>
     </div>
-    <h2 id="to-read-header" hidden>To Read</h2>
+    <h2 id="to-read-header" class="my-page" hidden>To Read</h2>
     <div class="book-display">
         <ul id="to-read"></ul>
     </div>
+    <p>A website from Book Ducks</p>
 </body>
 </html>

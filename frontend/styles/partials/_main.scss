@@ -1,15 +1,62 @@
 body.light {
-    background-color: plum;
-    color: white;
-    font-family: sans-serif;
+    background-color: $creamyellow;
+    color: $burgundy;
+    font-family: $overpass;
 }
 
 body.dark {
-    background-color: darkmagenta;
-    color: peachpuff;
-    font-family: sans-serif;
+    background-color: $burgundy;
+    color: $creamyellow;
+    font-family: $overpass;    
 }
 
+h1 {
+    font-weight: 400;
+    font-size: 68px;
+    font-family: $yeseva;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+}
+  
+.input label {
+    font-size: 16px;
+    font-weight: 300;
+}
+  
+.input input {
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+  
+.input input:focus {
+    outline: none;
+    border-color: #EDE0B2;
+    box-shadow: 0 0 0 2px $lightburgundy;
+}
+
+button {
+    font-family: $yeseva;
+    font-size: 18px;
+    background-color: $valentine;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin: 8px;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        background-color: $rose;
+    }
+}
+  
 .top {
     display: flex;
     flex-direction: column;
@@ -19,10 +66,16 @@ body.dark {
         flex-direction: column;
         h2 {
             text-align: center;
+            font-size: 18px;
+            font-weight: 400;
+            font-family: $rubik;
         }
     }
     .hidden {
         display: none
+    }
+    .my-page {
+        font-family: $yeseva;
     }
     
 }
@@ -35,6 +88,9 @@ h2 {
     display: none
 }
 
+.my-page {
+    font-family: $yeseva;
+}
 
 .book-display {
     width: 100%;
@@ -42,16 +98,16 @@ h2 {
 
     ::-webkit-scrollbar {
         width: 6px;
-      }
+    }
      
-      ::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
         background-color: #ccc;
         border-radius: 6px;
-      }
+    }
       
-      ::-webkit-scrollbar-thumb:hover {
+    ::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
-      }
+    }
   
     ul {
             list-style: none;
@@ -87,7 +143,34 @@ h2 {
 
 .radio {
     display: flex;
+    align-items: center;
 }
+
+input[type="radio"] {
+    font-family: $yeseva;
+    font-size: 18px;
+    color: $valentine;
+    margin: 8px;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid $valentine;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+}
+  
+input[type="radio"]:checked {
+    background-color: $valentine; 
+    border-color: $valentine;
+}
+
+p {
+    color: $rose;
+    text-align: center;
+    font-size: 16px;
+}
+
 
 @media (max-width: 768px) {
     li {
